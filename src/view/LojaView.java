@@ -31,7 +31,7 @@ public class LojaView {
         int quantidadeProduto = scan.nextInt();
         scan.nextLine();
         System.out.println("Qual o valor do produto: ");
-        BigDecimal precoProduto = scan.nextBigDecimal();
+        Double precoProduto = scan.nextDouble();
         scan.nextLine();
         System.out.println("Qual o tipo do produto: \n 1 - Eletronicos \n 2 - Alimentos \n 3 - Outros");
         TipoProduto tipoProduto = TipoProduto.getProduto(scan.nextLine());
@@ -49,7 +49,7 @@ public class LojaView {
         int quantidadeProduto = scan.nextInt();
         scan.nextLine();
         System.out.println("Qual o novo valor do produto: ");
-        BigDecimal precoProduto = scan.nextBigDecimal();
+        Double precoProduto = scan.nextDouble();
         scan.nextLine();
         System.out.println("Qual o tipo do produto: \n 1 - Eletronicos \n 2 - Alimentos \n 3 - Outros");
         TipoProduto tipoProduto = TipoProduto.getProduto(scan.nextLine());
