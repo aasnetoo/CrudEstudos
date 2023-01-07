@@ -1,14 +1,18 @@
 package controller;
 
 import database.DbFunctions;
+import db.ProdutoDAO;
+import exceptions.BuscaNaoEncontradaException;
 import exceptions.LojaVaziaException;
 import exceptions.ProdutoExisteException;
 import model.Loja;
 import model.Produto;
+import model.ProdutoDTO;
 import utils.Constantes;
 import view.LojaView;
 import view.Mensagens;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.Scanner;
 
 import static java.lang.System.exit;
@@ -16,42 +20,39 @@ import static java.lang.System.exit;
 
 public class LojaController {
 
+    ProdutoDAO produtoDAO = new ProdutoDAO();
+
     DbFunctions db = new DbFunctions();
-    LojaView view = new LojaView();
     Mensagens mensagens = new Mensagens();
     Scanner scan = new Scanner(System.in);
 
     Loja loja = new Loja();
 
-    public void menu() {
-        boolean continueMenu = true;
-        while (continueMenu) {
-            String option = (view.opcaoMenu());
-            try {
-                switch (option) {
-                    case Constantes.ADICIONAR_PRODUTO -> adicionarProduto();
-                    case Constantes.LISTAR_PRODUTO -> listarProduto();
-                    case Constantes.EDITAR_PRODUTO -> editarProduto();
-                    case Constantes.REMOVER_PRODUTO -> removerProduto();
-                    case Constantes.REMOVER_TODOS_PRODUTOS -> removerTodosProdutos();
-                    case Constantes.SAIR_DO_PROGRAMA -> {
-                        continueMenu = false;
-                        sairPrograma();
-                    } // 6
-                }
-            }catch (Exception e){
-                System.out.println(e.getMessage());
-            }
-        }
-    }
+//    public void menu() {
+//        boolean continueMenu = true;
+//        while (continueMenu) {
+//            String option = (view.opcaoMenu());
+//            try {
+//                switch (option) {
+//                    case Constantes.ADICIONAR_PRODUTO -> adicionarProduto();
+//                    case Constantes.LISTAR_PRODUTO -> listarProduto();
+//                    case Constantes.EDITAR_PRODUTO -> editarProduto();
+//                    case Constantes.REMOVER_PRODUTO -> removerProduto();
+//                    case Constantes.BUSCA_POR_NOME -> buscarPorNome();
+//                    case Constantes.SAIR_DO_PROGRAMA -> {
+//                        continueMenu = false;
+//                        sairPrograma();
+//                    } // 6
+//                }
+//            }catch (Exception e){
+//                System.out.println(e.getMessage());
+//            }
+//        }
+//    }
 
-    public void adicionarProduto(){
-        Produto novoProduto = view.adicionarProduto();
-        boolean produtoExiste = loja.getProdutos().stream().anyMatch(produto -> produto.equals(novoProduto));
-        if (produtoExiste) {
-            throw new ProdutoExisteException(novoProduto.getNome());
-        }
-        loja.getProdutos().add(novoProduto);
+    public void adicionarProduto(ProdutoDTO produtoDTO) throws SQLException {
+
+        produtoDAO.incluir(produtoDTO);
         mensagens.produtoAdicionado();
     }
 
@@ -62,8 +63,7 @@ public class LojaController {
 //        db.getProdutos();
 //    }
     public void listarProduto(){
-        verificarListaVazia();
-        loja.getProdutos().forEach(System.out::println);
+        produtoDAO.listar();
     }
 
     public int selecionarProduto(){
@@ -74,12 +74,12 @@ public class LojaController {
         return (Integer.parseInt(scan.nextLine())-Constantes.INDEX_FATOR);
     }
 
-    public void editarProduto(){
-        verificarListaVazia();
-        int indiceProdutoAtualizar = selecionarProduto();
-        Produto ProdutoAtualizar = view.editarProduto();
-        loja.getProdutos().set(indiceProdutoAtualizar,ProdutoAtualizar);
-    }
+//    public void editarProduto(){
+//        verificarListaVazia();
+//        int indiceProdutoAtualizar = selecionarProduto();
+//        Produto ProdutoAtualizar = view.editarProduto();
+//        loja.getProdutos().set(indiceProdutoAtualizar,ProdutoAtualizar);
+//    }
 
     public void removerProduto(){
         verificarListaVazia();
@@ -93,15 +93,18 @@ public class LojaController {
         }
     }
 
-    public void removerTodosProdutos(){
-        verificarListaVazia();
-        loja.getProdutos().clear();
+    public void buscarPorNome(String nome){
+        Produto produtoEncontrado = produtoDAO.consultarPorNome(nome);
+        if (produtoEncontrado == null){
+            throw new BuscaNaoEncontradaException();
+        }
+        System.out.println(produtoEncontrado);
     }
 
-    public void sairPrograma(){
-        view.sairPrograma();
-        scan.close();
-        exit(0);
-    }
+//    public void sairPrograma(){
+//        view.sairPrograma();
+//        scan.close();
+//        exit(0);
+//    }
 
 }

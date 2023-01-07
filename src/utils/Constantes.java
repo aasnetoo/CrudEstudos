@@ -15,7 +15,7 @@ public class Constantes {
     public static final String LISTAR_PRODUTO = "2";
     public static final String EDITAR_PRODUTO = "3";
     public static final String REMOVER_PRODUTO = "4";
-    public static final String REMOVER_TODOS_PRODUTOS = "5";
+    public static final String BUSCA_POR_NOME = "5";
 
     public static final String SAIR_DO_PROGRAMA = "6";
 

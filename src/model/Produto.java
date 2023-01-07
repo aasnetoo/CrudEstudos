@@ -6,24 +6,14 @@ import java.util.Objects;
 public class Produto {
 
     private String nome;
-    private String quantidade;
-    private String preco;
-    private String empid;
-
-    public String getEmpid() {
-        return empid;
-    }
+    private int quantidade;
+    private double preco;
+    private String tipoProduto;
 
     public Produto() {
     }
 
-    public void setEmpid(String empid) {
-        this.empid = empid;
-    }
-
-    private String tipoProduto;
-
-    public Produto(String nome, String quantidade, String preco, String tipoProduto) {
+    public Produto(String nome, int quantidade, double preco, String tipoProduto) {
         this.nome = nome;
         this.quantidade = quantidade;
         this.preco = preco;
@@ -38,19 +28,19 @@ public class Produto {
         this.nome = nome;
     }
 
-    public String getQuantidade() {
+    public int getQuantidade() {
         return quantidade;
     }
 
-    public void setQuantidade(String quantidade) {
+    public void setQuantidade(int quantidade) {
         this.quantidade = quantidade;
     }
 
-    public String getPreco() {
+    public double getPreco() {
         return preco;
     }
 
-    public void setPreco(String preco) {
+    public void setPreco(double preco) {
         this.preco = preco;
     }
 
