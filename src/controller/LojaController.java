@@ -1,5 +1,6 @@
 package controller;
 
+import database.DbFunctions;
 import exceptions.LojaVaziaException;
 import exceptions.ProdutoExisteException;
 import model.Loja;
@@ -7,7 +8,7 @@ import model.Produto;
 import utils.Constantes;
 import view.LojaView;
 import view.Mensagens;
-
+import java.sql.Connection;
 import java.util.Scanner;
 
 import static java.lang.System.exit;
@@ -15,6 +16,7 @@ import static java.lang.System.exit;
 
 public class LojaController {
 
+    DbFunctions db = new DbFunctions();
     LojaView view = new LojaView();
     Mensagens mensagens = new Mensagens();
     Scanner scan = new Scanner(System.in);
@@ -28,10 +30,10 @@ public class LojaController {
             try {
                 switch (option) {
                     case Constantes.ADICIONAR_PRODUTO -> adicionarProduto();
-                    case Constantes.LISTAR_PRODUTO -> listarProduto(); // 2
-                    case Constantes.EDITAR_PRODUTO -> editarProduto(); // 3
-                    case Constantes.REMOVER_PRODUTO -> removerProduto(); // 4
-                    case Constantes.REMOVER_TODOS_PRODUTOS -> removerTodosProdutos(); // 5
+                    case Constantes.LISTAR_PRODUTO -> listarProduto();
+                    case Constantes.EDITAR_PRODUTO -> editarProduto();
+                    case Constantes.REMOVER_PRODUTO -> removerProduto();
+                    case Constantes.REMOVER_TODOS_PRODUTOS -> removerTodosProdutos();
                     case Constantes.SAIR_DO_PROGRAMA -> {
                         continueMenu = false;
                         sairPrograma();
@@ -52,6 +54,13 @@ public class LojaController {
         loja.getProdutos().add(novoProduto);
         mensagens.produtoAdicionado();
     }
+
+
+
+//    public void produtosDoBanco(){
+//
+//        db.getProdutos();
+//    }
     public void listarProduto(){
         verificarListaVazia();
         loja.getProdutos().forEach(System.out::println);

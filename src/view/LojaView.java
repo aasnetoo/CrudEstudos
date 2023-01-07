@@ -28,13 +28,13 @@ public class LojaView {
         System.out.println("Qual nome do produto: ");
         String nomeProduto = scan.nextLine();
         System.out.println("Qual a quantidade: ");
-        int quantidadeProduto = scan.nextInt();
-        scan.nextLine();
+        String quantidadeProduto = scan.nextLine();
         System.out.println("Qual o valor do produto: ");
-        Double precoProduto = scan.nextDouble();
-        scan.nextLine();
-        System.out.println("Qual o tipo do produto: \n 1 - Eletronicos \n 2 - Alimentos \n 3 - Outros");
-        TipoProduto tipoProduto = TipoProduto.getProduto(scan.nextLine());
+        String precoProduto = scan.nextLine();
+//        System.out.println("Qual o tipo do produto: \n 1 - Eletronicos \n 2 - Alimentos \n 3 - Outros");
+//        TipoProduto tipoProduto = TipoProduto.getProduto(scan.nextLine());
+        System.out.println("Qual o tipo do Produto? Eletronicos, Alimentos ou Outros");
+        String tipoProduto = scan.nextLine();
 
         return new Produto(nomeProduto, quantidadeProduto, precoProduto, tipoProduto);
 
@@ -46,13 +46,13 @@ public class LojaView {
         System.out.println("Qual novo nome do produto: ");
         String nomeProduto = scan.nextLine();
         System.out.println("Qual a nova quantidade: ");
-        int quantidadeProduto = scan.nextInt();
-        scan.nextLine();
+        String quantidadeProduto = scan.nextLine();
         System.out.println("Qual o novo valor do produto: ");
-        Double precoProduto = scan.nextDouble();
-        scan.nextLine();
-        System.out.println("Qual o tipo do produto: \n 1 - Eletronicos \n 2 - Alimentos \n 3 - Outros");
-        TipoProduto tipoProduto = TipoProduto.getProduto(scan.nextLine());
+        String precoProduto = scan.nextLine();
+//        System.out.println("Qual o tipo do produto: \n 1 - Eletronicos \n 2 - Alimentos \n 3 - Outros");
+//        TipoProduto tipoProduto = TipoProduto.getProduto(scan.nextLine());
+        System.out.println("Qual o novo tipo do Produto? Eletronicos, Alimentos ou Outros");
+        String tipoProduto = scan.nextLine();
 
         return new Produto(nomeProduto, quantidadeProduto, precoProduto, tipoProduto);
 

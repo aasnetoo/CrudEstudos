@@ -1,52 +1,19 @@
 package database;
 
-
 import model.Produto;
-import model.TipoProduto;
 
-import java.math.BigDecimal;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DbFunctions {
-    public Connection connect_to_db(String dbname, String user, String pass){
-        Connection conn = null;
-        try {
-            Class.forName("org.postgresql.Driver");
-            conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/"+dbname,user,pass);
-            if (conn!= null){
-                System.out.println("Conexão estabelecida");
-            }
-            else{
-                System.out.println("Conexão falhou");
-            }
+public class ProductDb {
 
-        }catch(Exception e) {
-            System.out.println(e);
-        }
-        return conn;
-    }
-
-//    public void createTable(Connection conn, String table_name){
-//        Statement statement;
-//        try{
-//            String query ="create table "+table_name+"(empid SERIAL,nome varchar(200),quantidade integer,preco float,tipo varchar(200),primary key(empid));";
-//            statement = conn.createStatement();
-//            statement.executeUpdate(query);
-//            System.out.println("Table created");
-//        }catch (Exception e){
-//            System.out.println(e);
-//        }
-//    }
-
-    public void insert_row(Connection conn, String table_name, String nome, int quantidade, double preco, String tipo){
+    public void insert(Connection conn, String table_name, String nome, int quantidade, double preco, String tipo){
         Statement statement;
         try{
-            String query= String.format("insert into %s(nome,quantidade,preco,tipo) values('%s',%s,%s,'%s');",table_name,nome,quantidade,preco,tipo);
+            String query= String.format("insert into Produtos1(nome,quantidade,preco,tipo) values('%s',%s,%s,'%s');",nome,quantidade,preco,tipo);
             statement = conn.createStatement();
             statement.executeUpdate(query);
             System.out.println("Row Inserted.");
@@ -54,7 +21,7 @@ public class DbFunctions {
             System.out.println(e);
         }
     }
-    public void read_data(Connection conn, String table_name){
+    public void read(Connection conn, String table_name){
         Statement statement;
         ResultSet rs = null;
         try{

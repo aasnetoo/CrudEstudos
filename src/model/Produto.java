@@ -6,12 +6,24 @@ import java.util.Objects;
 public class Produto {
 
     private String nome;
-    private int quantidade;
-    private Double preco;
+    private String quantidade;
+    private String preco;
+    private String empid;
 
-    TipoProduto tipoProduto;
+    public String getEmpid() {
+        return empid;
+    }
 
-    public Produto(String nome, int quantidade, Double preco, TipoProduto tipoProduto) {
+    public Produto() {
+    }
+
+    public void setEmpid(String empid) {
+        this.empid = empid;
+    }
+
+    private String tipoProduto;
+
+    public Produto(String nome, String quantidade, String preco, String tipoProduto) {
         this.nome = nome;
         this.quantidade = quantidade;
         this.preco = preco;
@@ -26,27 +38,27 @@ public class Produto {
         this.nome = nome;
     }
 
-    public int getQuantidade() {
+    public String getQuantidade() {
         return quantidade;
     }
 
-    public void setQuantidade(int quantidade) {
+    public void setQuantidade(String quantidade) {
         this.quantidade = quantidade;
     }
 
-    public Double getPreco() {
+    public String getPreco() {
         return preco;
     }
 
-    public void setPreco(Double preco) {
+    public void setPreco(String preco) {
         this.preco = preco;
     }
 
-    public TipoProduto getTipoProduto() {
+    public String getTipoProduto() {
         return tipoProduto;
     }
 
-    public void setTipoProduto(TipoProduto tipoProduto) {
+    public void setTipoProduto(String tipoProduto) {
         this.tipoProduto = tipoProduto;
     }
 
@@ -56,7 +68,7 @@ public class Produto {
         sb.append("Nome do Produto: ").append(getNome());
         sb.append("\n Quantidade: ").append(getQuantidade());
         sb.append("\n Valor: ").append(getPreco());
-        sb.append(" Tipo do Produto: ").append(tipoProduto.getNome());
+        sb.append(" Tipo do Produto: ").append(getTipoProduto());
 
         return sb.toString();
     }
