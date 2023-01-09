@@ -31,28 +31,47 @@ public class Conexao {
 
         return conn;
     }
-    public ResultSet executarConsulta(String consulta) {
 
-        conn = conectar();
+    public Conexao() {
+        try {
+            String usuario = "postgres";
+            String senha = "waer9a0s";
+            String ipDoBanco = "localhost:5432";
+            String nomeDoBanco = "produtos";
+            String stringDeConexao = "jdbc:postgresql://" + ipDoBanco + "/" + nomeDoBanco;
+            Class.forName("org.postgresql.Driver");
+            conn = DriverManager.getConnection(stringDeConexao, usuario, senha);
+            System.out.println("Conectou no banco de dados.");
+        } catch (SQLException ex) {
+            System.out.println("Erro: Não conseguiu conectar no BD.");
+        } catch (ClassNotFoundException ex) {
+            System.out.println("Erro: Não encontrou o driver do BD.");
+        }
+    }
+
+
+
+    public ResultSet executarConsulta(String consulta) throws SQLException {
+
         try {
             stm = conn.createStatement();
             rs = stm.executeQuery(consulta);
         } catch (SQLException ex) {
             System.out.println("Não conseguiu executar a consulta\n" + consulta);
             //Caso ocorra algum erro desconecta do banco de dados.
+        }finally{
             desconectar();
         }
 
         return rs;
     }
 
-    public ResultSet executarListar (String listar) {
-        conn = conectar();
+    public ResultSet executarQuery (String query){
         try {
             stm = conn.createStatement();
-            rs = stm.executeQuery(listar);
+            rs = stm.executeQuery(query);
         } catch (SQLException ex) {
-            System.out.println("Não conseguiu executar a listagem\n" + listar);
+            System.out.println("Não conseguiu executar a listagem\n" + query);
             //Caso ocorra algum erro desconecta do banco de dados.
             desconectar();
         }
@@ -64,15 +83,14 @@ public class Conexao {
 
     public boolean executeQuery(String query) {
         boolean ok = false;
-
-        conn = conectar();
         try {
             stm = conn.createStatement();
             stm.executeUpdate(query);
             ok = true;
+            System.out.println("O produto foi adicionado com sucesso. ");
         } catch (SQLException ex) {
             System.out.println("Nao conseguiu executar o DML\n" + query);
-        } finally {
+        }finally{
             desconectar();
         }
 
@@ -123,11 +141,11 @@ public class Conexao {
     public static Conexao getInstance() throws SQLException {
         if (instance == null) {
             instance = new Conexao();
-        } else if (instance.getConnection().isClosed()) {
-            instance = new Conexao();
         }
         return instance;
     }
+
+
 
 
     public void desconectar(Connection conn) {

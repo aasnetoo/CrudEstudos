@@ -1,10 +1,12 @@
 package view;
 
 import controller.LojaController;
+import db.Conexao;
 import model.*;
 import utils.Constantes;
 
 import java.math.BigDecimal;
+import java.sql.SQLException;
 import java.util.Scanner;
 
 import static java.lang.System.exit;
@@ -12,9 +14,13 @@ import static java.lang.System.exit;
 
 public class LojaView {
 
+
     Scanner scan = new Scanner(System.in);
 
     LojaController controller = new LojaController();
+
+    public LojaView() throws SQLException {
+    }
 
     public String opcaoMenu() {
         System.out.println("---------- MENU ----------");
@@ -34,16 +40,14 @@ public class LojaView {
             String option = opcaoMenu();
             try {
                 switch (option) {
-                    case Constantes.ADICIONAR_PRODUTO -> {
-                        adicionarProduto(obterInformacoesProduto());
-
-                    }
+                    case Constantes.ADICIONAR_PRODUTO -> adicionarProduto(obterInformacoesProduto());
                     case Constantes.LISTAR_PRODUTO -> controller.listarProduto();
                     case Constantes.EDITAR_PRODUTO -> System.out.println();
                     case Constantes.REMOVER_PRODUTO -> controller.removerProduto();
                     case Constantes.BUSCA_POR_NOME -> controller.buscarPorNome(nomeBusca());
                     case Constantes.SAIR_DO_PROGRAMA -> {
                         continueMenu = false;
+                        controller.sairPrograma();
                         exit(0);
                     } // 6
                 }
@@ -77,7 +81,7 @@ public class LojaView {
 
     }
 
-    public void adicionarProduto(ProdutoDTO produtoDTO){
+    public void adicionarProduto(ProdutoDTO produtoDTO) throws SQLException {
         controller.adicionarProduto(produtoDTO);
     }
 
@@ -106,7 +110,7 @@ public class LojaView {
         return scan.nextLine();
     }
 
-    public void buscarNome(){
+    public void buscarNome() throws SQLException {
         controller.buscarPorNome(nomeBusca());
     }
 

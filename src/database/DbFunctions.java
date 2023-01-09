@@ -1,16 +1,8 @@
 package database;
 
 
-import model.Produto;
-import model.TipoProduto;
-
-import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
 
 public class DbFunctions {
     public Connection connect_to_db(String dbname, String user, String pass){

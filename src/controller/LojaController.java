@@ -4,21 +4,17 @@ import database.DbFunctions;
 import db.ProdutoDAO;
 import exceptions.BuscaNaoEncontradaException;
 import exceptions.LojaVaziaException;
-import exceptions.ProdutoExisteException;
-import model.Loja;
 import model.Produto;
 import model.ProdutoDTO;
 import utils.Constantes;
-import view.LojaView;
 import view.Mensagens;
-import java.sql.Connection;
+
 import java.sql.SQLException;
 import java.util.Scanner;
 
-import static java.lang.System.exit;
-
 
 public class LojaController {
+
 
     ProdutoDAO produtoDAO = new ProdutoDAO();
 
@@ -26,7 +22,8 @@ public class LojaController {
     Mensagens mensagens = new Mensagens();
     Scanner scan = new Scanner(System.in);
 
-    Loja loja = new Loja();
+    public LojaController() throws SQLException {
+    }
 
 //    public void menu() {
 //        boolean continueMenu = true;
@@ -51,9 +48,12 @@ public class LojaController {
 //    }
 
     public void adicionarProduto(ProdutoDTO produtoDTO) throws SQLException {
-
         produtoDAO.incluir(produtoDTO);
-        mensagens.produtoAdicionado();
+
+    }
+
+    public void sairPrograma(){
+        produtoDAO.desconectar();
     }
 
 
@@ -62,17 +62,15 @@ public class LojaController {
 //
 //        db.getProdutos();
 //    }
-    public void listarProduto(){
-        produtoDAO.listar();
+    public void listarProduto() throws SQLException {
+        for (int i = 0; i < produtoDAO.listar().size(); i++) {
+            System.out.println(produtoDAO.listar().get(i));
+        };
     }
 
-    public int selecionarProduto(){
-        mensagens.SelecionarProduto();
-        for (int i = 0; i < loja.getProdutos().size(); i++) {
-            System.out.println((i+1)+" - "+loja.getProdutos().get(i).getNome());
-        }
-        return (Integer.parseInt(scan.nextLine())-Constantes.INDEX_FATOR);
-    }
+//    public int selecionarProduto(){
+//
+//    }
 
 //    public void editarProduto(){
 //        verificarListaVazia();
@@ -82,18 +80,11 @@ public class LojaController {
 //    }
 
     public void removerProduto(){
-        verificarListaVazia();
-        int indiceProudtoARemover = selecionarProduto();
-        loja.getProdutos().remove(indiceProudtoARemover);
+
     }
 
-    public void verificarListaVazia(){
-        if (loja.getProdutos().isEmpty()){
-            throw new LojaVaziaException();
-        }
-    }
 
-    public void buscarPorNome(String nome){
+    public void buscarPorNome(String nome) throws SQLException {
         Produto produtoEncontrado = produtoDAO.consultarPorNome(nome);
         if (produtoEncontrado == null){
             throw new BuscaNaoEncontradaException();
